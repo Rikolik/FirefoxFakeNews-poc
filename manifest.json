@@ -1,0 +1,25 @@
+{
+    "description": "Gemini AI test",
+    "manifest_version": 2,
+    "name": "Gemini Test",
+    "version": "1.0",
+
+    "icons": {
+        "48": "icons/beasts-48.png" 
+    },
+
+    "permissions": [
+        "activeTab",
+        "storage",
+        "https://generativelanguage.googleapis.com/*",
+        "*instagram*",
+        "webRequest",
+        "webRequestBlocking"
+    ],
+
+    "browser_action": {
+        "default_icon": "icons/beasts-48.png",
+        "default_title": "Gemini",
+        "default_popup": "popup/popup.html"
+    }
+}
