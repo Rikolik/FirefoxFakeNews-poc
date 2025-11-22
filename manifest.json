@@ -5,7 +5,7 @@
     "version": "1.0",
 
     "icons": {
-        "48": "icons/beasts-48.png" 
+        "48": "icons/robot.png" 
     },
 
     "permissions": [
@@ -18,7 +18,7 @@
     ],
 
     "browser_action": {
-        "default_icon": "icons/beasts-48.png",
+        "default_icon": "icons/robot.png",
         "default_title": "Gemini",
         "default_popup": "popup/popup.html"
     }

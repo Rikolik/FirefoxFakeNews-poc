@@ -28,13 +28,41 @@ async function salvarImagem(target) {
 }
 
 function mostrarResultado(objData) {
-  console.log(objData);
   let args = objData.candidates[0].content.parts[0].functionCall.args;
   let prVeracidade = args.pr_veracidade;
   let dsMotivo = args.motivo;
-  // let dsFontes = args.fonte.join("\n");
-  // alert(`Veracidade: ${prVeracidade}%\nMotivo: ${dsMotivo}\nFonte(s):\n${dsFontes}`);
-  alert(`Veracidade: ${prVeracidade}%\nMotivo: ${dsMotivo}\n`);
+  let dsResultado = '';
+
+  if (prVeracidade == 100)
+    dsResultado = 'Provavelmente é uma notícia <b>VERDADEIRA</b>!';
+  else if (prVeracidade > 80)
+    dsResultado = 'Possivelmente real!';
+  else if (prVeracidade > 60)
+    dsResultado = 'Inconclusivo!';
+  else if (prVeracidade > 40)
+    dsResultado = 'Possivelmente <b>FALSA</b>, muito cuidado!';
+  else if (prVeracidade > 20)
+    dsResultado = 'Provavelmente <b>FALSA</b>!';
+  else if (prVeracidade >= 0)
+    dsResultado = 'Possivelmente FAKE NEWS!';
+  else
+    dsResultado = 'Indistinguível!';
+
+  document.documentElement.style.setProperty('--progress-value', prVeracidade);
+
+  Swal.fire({
+    title: dsResultado,
+    html: `
+      <div class="flexWrapper">
+        <div class="progressWrapper">
+          <div class="progress-bar" role="progressbar">
+          </div>
+        </div>
+
+        <p>${dsMotivo}</p><br/>
+      </div>
+    `,
+  });
 }
 
 async function verificarImagem(imgElement) {
@@ -43,13 +71,9 @@ async function verificarImagem(imgElement) {
   // Essa parte deveria ser executada num servidor separado, já que ela
   // incluirá chamadas para a API do Gemini, que precisa de uma chave
   // privada
-  // Por questões de exemplificação, irei deixar a chama aqui sem a chave
-  // e com retornos de exemplo
-  const API_KEY = '';
+  const API_KEY = apiKey;
 
-  //gemini-pro
-  //gemini-1.5-flash
-  const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+  const API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
 
   const aiTools = {
     function_declarations: [{
@@ -88,7 +112,7 @@ async function verificarImagem(imgElement) {
           parts: [
             {
               text: "Validar se a imagem a seguir é uma Fake News. Retorne uma descrição breve caso " +
-                "seja fake, um percentual de veracidade e as fontes que provam sua defnição. Seja " +
+                "seja fake, um percentual de veracidade e as fontes que provam sua definição. Seja " +
                 "exigente, se um ponto da notícia for manipulador ou falso, não deve ser 100% " +
                 "verdadeiro."
             },

@@ -1,6 +1,9 @@
 body {
     color: #376bbf;
     border: black solid 1px;
+    width: 350px;
+    height: 100%;
+    overflow: hidden;
 }
 
 .escondido {
@@ -8,17 +11,12 @@ body {
 }
 
 #selecionarImagem {
-    background-color: white;
-    color: inherit;
     border: #376bbf solid 1px;
-    border-radius: 10px;
-    box-shadow: 0 1px;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-weight: bold;
+    border-radius: 20px;
 }
 
-#selecionarImagem:active {
-    background-color: #376bbf;
-    color: white;
+#pSelecionarImagem {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
